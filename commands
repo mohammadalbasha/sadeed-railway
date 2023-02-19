@@ -1,0 +1,29 @@
+
+nest start -- watch
+
+
+<!-- pm2 stop all
+
+cd /home/sadid/www/sadid_central
+git pull
+npm install
+nest build
+
+cd /home/sadid/www/sadid_admin
+git pull
+npm install
+nest build
+
+cd /home/sadid/www/sadid_front
+git pull
+nest build
+
+pm2 start all
+
+
+
+pm2 start dist/main.js --name central
+pm2 start dist/main.js --name admin
+pm2 start dist/main.js --name front
+
+pm2 save -->

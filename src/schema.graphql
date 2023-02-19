@@ -1,0 +1,1504 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Plan_Locale {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+type Plan {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [Plan_Locale!]!
+  transactionPercentFees: Float!
+  transactionFixedFees: Float!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type PaginatedPlan {
+  items: [Plan!]
+  totalCount: Int!
+}
+
+type Currency_Locale {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+type Currency {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [Currency_Locale!]!
+  code: String
+}
+
+type PaginatedCurrency {
+  items: [Currency!]
+  totalCount: Int!
+}
+
+type PaymentMethod_Locale {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+type PaymentMethod {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [PaymentMethod_Locale!]!
+  transactionPercentFees: Float!
+  transactionFixedFees: Float!
+  apiId: String
+  type: PaymentMethodType!
+  currencies_id: [String!]!
+  currencies: [Currency!]!
+}
+
+""""""
+enum PaymentMethodType {
+  paypal
+  credit_card
+  stripe
+}
+
+type PaginatedPaymentMethod {
+  items: [PaymentMethod!]
+  totalCount: Int!
+}
+
+type PayoutMethod_Locale {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+type PayoutMethod {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [PayoutMethod_Locale!]!
+  minPayout: Float!
+  maxPayout: Float!
+  apiId: String
+  type: PayoutMethodType!
+  currencies_id: [String!]!
+  currencies: [Currency!]!
+}
+
+""""""
+enum PayoutMethodType {
+  electronic_bank
+  transfer_bank
+  money_transfer
+}
+
+type PaginatedPayoutMethod {
+  items: [PayoutMethod!]
+  totalCount: Int!
+}
+
+type Country_Locale {
+  locale: String!
+  name: String!
+}
+
+type Country {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [Country_Locale!]!
+  code: String!
+  invitationPrize: Float!
+  plan_id: String!
+  plan: Plan!
+  currency_id: String!
+  currency: Currency!
+  shopCurrencies_id: [String!]!
+  shopCurrencies: [Currency!]!
+  paymentMethods_id: [String!]!
+  paymentMethods: [PaymentMethod!]!
+  payoutMethods_id: [String!]!
+  payoutMethods: [PayoutMethod!]!
+}
+
+type PaginatedCountry {
+  items: [Country!]
+  totalCount: Int!
+}
+
+type Permisions {
+  action: String!
+  subject: String!
+  fields: [String!]
+  conditions: JSON
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type CentralRole {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  name: String!
+  description: String!
+  permisions: [Permisions!]!
+}
+
+type PaginatedCentralRole {
+  items: [CentralRole!]
+  totalCount: Int!
+}
+
+type Company {
+  legalName: String
+  businessType: String
+  dateOfEstablishment: Date
+  phone: String
+  countryId: String
+  country: Country
+  city: String
+  region: String
+  street: String
+  buildingNumber: Int
+  officeNumber: Int
+  postalCode: Int
+}
+
+type User {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  username: String!
+  email: String!
+  browser: String!
+  administrator_incorrectPasswordTries: Int!
+  administrator_incorrectIpTries: Int!
+  deleted: Boolean!
+  enableOrDisableNote: String!
+  emailVerifiedAt: Date
+  locale: Locale
+  gender: Gender
+  timezone: String
+  imageId: String
+  fullName: String
+  phone: String
+  countryId: String
+  country: Country
+  city: String
+  administrator_centralNote: String
+  administrator_createdById: String
+  administrator_createdBy: User!
+  administrator_updatedById: String
+  administrator_updatedBy: User
+  administrator_centralRoleId: [String!]
+  administrator_centralRole: [CentralRole!]!
+
+  """it is better to have these properties as common properties"""
+  administrator_postalCode: String
+  administrator_address: String
+  administrator_website: String
+  administrator_facebookAccount: String
+  administrator_twitterAccount: String
+  administrator_linkedinAccount: String
+  customer_isShallowAccount: Boolean
+  admin_isSoftDeleted: Boolean!
+  admin_deleteNote: String
+  admin_isVerifiedPasswordGenerationToken: Boolean
+  admin_isGoogleTwoFactorAuthenticationEnabled: Boolean!
+  admin_isGoogleTwoFactorAuthenticated: Boolean!
+  admin_emailOtpTwoFactorCode: String!
+  admin_isEmailOtpTwoFactorAuthenticationEnabled: Boolean!
+  admin_isEmailOtpTwoFactorAuthenticated: Boolean!
+  admin_isClosedAccount: Boolean
+  admin_isSubscribedToNews: Boolean
+  admin_isCompanyAccount: Boolean!
+  admin_isCompanyOwner: Boolean!
+  admin_company: Company
+
+  """
+  mohammad albacha edit
+  I want to make these properties as common properties but changes make error in other modules
+  """
+  admin_socialSecurityNumber: String
+  admin_dateOfBirth: Date
+  admin_postalCode: String
+  admin_address: String
+  admin_region: String
+  admin_street: String
+  admin_website: String
+  admin_facebookAccount: String
+  admin_twitterAccount: String
+  admin_linkedinAccount: String
+  admin_buildingNumber: Int
+  admin_notesByCentral: String
+  admin_central_isVerifiedSellerId: Boolean
+  admin_central_isVerifiedAddress: Boolean
+  admin_billingEmail: String
+  admin_toBeDeletedAt: Date
+}
+
+""""""
+enum Locale {
+  en
+  ar
+  try
+}
+
+""""""
+enum Gender {
+  male
+  female
+}
+
+type paginatedUser {
+  items: [User!]
+  totalCount: Int!
+}
+
+type BusinessType_Locale {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+type BusinessType {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [BusinessType_Locale!]!
+  allCountries: Boolean!
+  countries_id: [String!]
+  countries: [Country!]
+}
+
+type PaginatedBusinessType {
+  items: [BusinessType!]
+  totalCount: Int!
+}
+
+type Log {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  user_id: String
+  endpoint: Endpoint!
+  hasErrors: Boolean!
+  type: LogType
+  operationName: String
+  request: String
+  response: String
+  ip: String
+  user: User
+}
+
+""""""
+enum Endpoint {
+  central
+  admin
+  front
+}
+
+""""""
+enum LogType {
+  query
+  mutation
+  unknown
+}
+
+type PaginatedLog {
+  items: [Log!]
+  totalCount: Int!
+}
+
+type Speciality_Locale {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+type Speciality {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [Speciality_Locale!]!
+  allCountries: Boolean!
+  countries_id: [String!]!
+  countries: [Country!]
+}
+
+type PaginatedSpeciality {
+  items: [Speciality!]
+  totalCount: Int!
+}
+
+type Shop_Locale {
+  locale: String!
+  name: String!
+  desc: String
+  subscribeTitle: String
+  subscribeDesc: String
+}
+
+type Shop {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [Shop_Locale!]!
+  slug: String
+  host: String
+  owner_id: String!
+  currency_id: String!
+  speciality_id: String!
+  defaultLocale: Locale
+  viewLocales: [Locale!]
+  viewCurrencies_id: [String!]
+  showDefaultCurrencyByVisitorCountry: Boolean
+  paymentMethods_id: [String!]
+  showInCentral: Boolean
+  keepProductStockAndInventory: Boolean
+  expectedMonthlyTransactionVolume: Int
+  contactEmail: String
+  contactPhone: String
+  supportEmail: String
+  supportPhone: String
+  primaryColor: String
+  secondaryColor: String
+  isAgreementMandetoryBeforeSignup: Boolean
+  isAgreementMandetoryBeforeDownload: Boolean
+  business_isBusiness: Boolean
+  business_businessType_id: String
+  business_representativeOfBusiness: Boolean
+  business_legalName: String
+  business_dateOfEstablishment: Date
+  business_phone: String
+  business_city: String
+  business_zip: String
+  business_address: String
+  central_maxSubUsers: Int
+  central_isVerifiedBusiness: Boolean
+  central_isVerifiedBusinessAddress: Boolean
+  product_showRating: Boolean
+  product_showVisits: Boolean
+  product_showSales: Boolean
+  product_showStock: Boolean
+  product_showInCentral: Boolean
+  product_canOrderMany: Boolean
+  product_doesSubscriperLoseAccessAfterCanceling: Boolean
+  product_autoCancelSubscriptionAfterPeriod: Int
+  product_autoCancelSubscriptionAfterPeriodUnit: PeriodUnit
+  product_maxDownloadAttempts: Int
+  product_downloadExpiryPeriod: Int
+  product_downloadExpiryPeriodUnit: PeriodUnit
+  product_purchaseMessage: String
+  product_puchaseRedirectUrl: String
+}
+
+""""""
+enum PeriodUnit {
+  h
+  d
+  w
+  m
+  y
+}
+
+type MediaFile {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  user_id: String
+  shop_id: String
+  storage: MediaFileStorageType
+  filename: String
+  originalName: String
+  name: String
+  size: Int
+  mimeType: String
+  isPublic: Boolean
+}
+
+""""""
+enum MediaFileStorageType {
+  local
+}
+
+type PaginatedMediaFile {
+  items: [MediaFile!]
+  totalCount: Int!
+}
+
+type TicketCategory_Locale {
+  locale: String!
+  name: String!
+}
+
+type TicketCategory {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [TicketCategory_Locale!]!
+}
+
+type PaginatedTicketCategory {
+  items: [TicketCategory!]
+  totalCount: Int!
+}
+
+type Ticket {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  isCentralSeen: Boolean!
+  central_notes: String
+  category_id: String!
+  category: TicketCategory!
+  user_id: String!
+  user: User
+  admin_id: String
+  admin: User
+  status: TicketStatus!
+  priority: TicketPriority!
+  subject: String!
+  isUserSeen: Boolean!
+  lastReplyTime: Date!
+  lastReplyMessage: String!
+  lastReplyIsByAdmin: Boolean!
+}
+
+""""""
+enum TicketStatus {
+  open
+  reopened
+  solved
+  processing
+  closed
+}
+
+""""""
+enum TicketPriority {
+  high
+  normal
+  low
+}
+
+type PaginatedTicket {
+  items: [Ticket!]
+  totalCount: Int!
+}
+
+type TicketMessage {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  ticket_id: String!
+  admin_id: String
+  admin: User
+  isAdmin: Boolean!
+  message: String!
+  seenAt: Date
+}
+
+type PaginatedTicketMessage {
+  items: [TicketMessage!]
+  totalCount: Int!
+}
+
+type UserPayoutMethod_Locale {
+  locale: String!
+  accountName: String!
+}
+
+type UserPayoutMethod {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [UserPayoutMethod_Locale!]!
+  user_id: String!
+  payoutMethod_id: String!
+  isDefault: Boolean
+  accountNumber: String!
+  city: String!
+  iban: String!
+  swift: String!
+  email: String!
+  phone: String!
+}
+
+type UserPayoutRequest_Locale {
+  locale: String!
+  accountName: String!
+}
+
+type UserPayoutRequest {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [UserPayoutRequest_Locale!]!
+  user_id: String!
+  userPayoutMethod_id: String!
+}
+
+type UserDocumentType_Locale {
+  locale: String!
+  subject: String!
+  desc: String
+}
+
+type UserDocumentType {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  locales: [UserDocumentType_Locale!]!
+  countryId: String
+  country: Country
+  nameEN: String!
+  nameAR: String!
+  descriptionAR: String!
+  descriptionEN: String!
+  centralNote: String!
+}
+
+type PaginatedUserDocumentType {
+  items: [UserDocumentType!]
+  totalCount: Int!
+}
+
+type UserDocument {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  central_notes: String
+  user_id: String
+  shop_id: String
+  type_id: String
+  user_notes: String
+  file_id: String
+  file: MediaFile
+  status: DocumentStatus!
+  type: UserDocumentType!
+}
+
+""""""
+enum DocumentStatus {
+  requested
+  uploaded
+  processing
+  accepted
+  rejected
+}
+
+type PaginatedUserDocument {
+  items: [UserDocument!]
+  totalCount: Int!
+}
+
+type Ip {
+  id: ID!
+  createdAt: Date
+  updatedAt: Date
+  isActive: Boolean
+  ip: String!
+}
+
+type PaginatedIp {
+  items: [Ip!]
+  totalCount: Int!
+}
+
+type Token {
+  """JWT access token"""
+  accessToken: String!
+
+  """JWT refresh token"""
+  refreshToken: String!
+}
+
+type Auth {
+  """JWT access token"""
+  accessToken: String!
+
+  """JWT refresh token"""
+  refreshToken: String!
+  user: User!
+  ability: JSON
+}
+
+type Me {
+  user: User!
+  ability: JSON
+}
+
+type Query {
+  helloWorld: String!
+  generateAdminGoogleTwoFactorsCode: String!
+  maxCentralPermisions: [Permisions!]!
+  me: Me!
+  users(skip: Int = 0, limit: Int = 15, filterBy: UserFilter!): paginatedUser!
+  administratorUsers(skip: Int = 0, limit: Int = 15, filterBy: AdministratorFilter!): paginatedUser!
+  adminUsers(skip: Int = 0, limit: Int = 15, filterBy: AdminFilter!): paginatedUser!
+  mediaFile(id: String!): MediaFile!
+  mediaFiles(skip: Int = 0, limit: Int = 15, query: String, orderBy: MediaFileOrderInput): PaginatedMediaFile!
+  log(id: String!): Log!
+  logs(skip: Int = 0, limit: Int = 15, query: String, filterBy: LogFilterInput, orderBy: LogOrderInput): PaginatedLog!
+  centralLogs: [Log!]!
+  frontAndAdminLogs: [Log!]!
+  paginatedCentralLogs(skip: Int = 0, limit: Int = 15): PaginatedLog!
+  paginatedFrontAndAdminLogs(skip: Int = 0, limit: Int = 15): PaginatedLog!
+  plan(id: String!): Plan!
+  plans(skip: Int = 0, limit: Int = 15, query: String, orderBy: PlanOrderInput): PaginatedPlan!
+  currency(id: String!): Currency!
+  currencys(skip: Int = 0, limit: Int = 15, query: String, orderBy: CurrencyOrderInput): PaginatedCurrency!
+  paymentMethod(id: String!): PaymentMethod!
+  paymentMethods(skip: Int = 0, limit: Int = 15, query: String, orderBy: PaymentMethodOrderInput): PaginatedPaymentMethod!
+  payoutMethod(id: String!): PayoutMethod!
+  payoutMethods(skip: Int = 0, limit: Int = 15, query: String, orderBy: PayoutMethodOrderInput): PaginatedPayoutMethod!
+  country(id: String!): Country!
+  countrys(skip: Int = 0, limit: Int = 15, query: String, orderBy: CountryOrderInput): PaginatedCountry!
+  businessType(id: String!): BusinessType!
+  businessTypes(skip: Int = 0, limit: Int = 15, query: String, orderBy: BusinessTypeOrderInput): PaginatedBusinessType!
+  speciality(id: String!): Speciality!
+  specialitys(skip: Int = 0, limit: Int = 15, query: String, orderBy: SpecialityOrderInput): PaginatedSpeciality!
+  ticket(id: String!): Ticket!
+  tickets(skip: Int = 0, limit: Int = 15, query: String, filterBy: TicketFilterInput, orderBy: TicketOrderInput): PaginatedTicket!
+  ticketMessages(ticket_id: String!, skip: Int = 0, limit: Int = 15, query: String): PaginatedTicketMessage!
+  ticketCategory(id: String!): TicketCategory!
+  ticketCategorys(skip: Int = 0, limit: Int = 15, query: String, orderBy: TicketCategoryOrderInput): PaginatedTicketCategory!
+  userDocumentType(id: String!): UserDocumentType!
+  userDocumentTypes(skip: Int = 0, limit: Int = 15, query: String, orderBy: UserDocumentTypeOrderInput): PaginatedUserDocumentType!
+  userDocument(id: String!): UserDocument!
+  userDocuments(skip: Int = 0, limit: Int = 15, query: String, orderBy: UserDocumentOrderInput): PaginatedUserDocument!
+  ip(id: String!): Ip!
+  ips(skip: Int = 0, limit: Int = 15, query: String, orderBy: IpOrderInput): PaginatedIp!
+  centralRole(id: String!): CentralRole!
+  centralRoles(skip: Int = 0, limit: Int = 15, query: String, orderBy: CentralRoleOrderInput): PaginatedCentralRole!
+}
+
+input UserFilter {
+  id: String
+  isActive: Boolean
+  deleted: Boolean
+  email: String
+  username: String
+  fullName: String
+  phone: String
+  city: String
+  countryId: String
+}
+
+input AdministratorFilter {
+  id: String
+  isActive: Boolean
+  deleted: Boolean
+  email: String
+  username: String
+  fullName: String
+  phone: String
+  city: String
+  countryId: String
+  administrator_centralRoleId: [String!]
+}
+
+input AdminFilter {
+  id: String
+  isActive: Boolean
+  deleted: Boolean
+  email: String
+  username: String
+  fullName: String
+  phone: String
+  city: String
+  countryId: String
+  admin_isSoftDeleted: Boolean
+  admin_dateOfBirth: Date
+  admin_isClosedAccount: Boolean
+  admin_isSubscribedToNews: Boolean
+  admin_isCompanyAccount: Boolean
+  admin_company: CompanyFilter
+  admin_isGoogleTwoFactorAuthenticationEnabled: Boolean
+  admin_socialSecurityNumber: String
+  admin_postalCode: String
+  admin_address: String
+  admin_region: String
+  admin_street: String
+}
+
+input CompanyFilter {
+  legalName: String
+  businessType: String
+  dateOfEstablishment: Date
+  phone: String
+  city: String
+  region: String
+  street: String
+  buildingNumber: Int
+  officeNumber: Int
+  postalCode: Int
+  countryId: String
+}
+
+input MediaFileOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+"""
+Possible directions in which to order a list of items when provided an `orderBy` argument.
+"""
+enum OrderDirection {
+  asc
+  desc
+}
+
+input LogFilterInput {
+  dateFilter: DateFilter
+  user_id: String
+  endpoint: Endpoint!
+  hasErrors: Boolean
+  type: LogType
+  operationName: String
+  ip: String
+}
+
+input DateFilter {
+  gte: Date!
+  lte: Date!
+}
+
+input LogOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input PlanOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input CurrencyOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input PaymentMethodOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input PayoutMethodOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input CountryOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input BusinessTypeOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input SpecialityOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input TicketFilterInput {
+  category_id: String
+  priority: TicketPriority
+  status: TicketStatus
+  isCentralSeen: Boolean
+  admin_id: String
+  lastReplyIsByAdmin: Boolean
+}
+
+input TicketOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input TicketCategoryOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input UserDocumentTypeOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input UserDocumentOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input IpOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+input CentralRoleOrderInput {
+  field: String!
+  direction: OrderDirection!
+}
+
+type Mutation {
+  signup(data: SignupInput!): Auth!
+  login(data: LoginInput!): Auth!
+  verifyAdministratorTwoFactorsCode(data: AdministratorTwoFactorsInput!): String!
+  verifyAdminPasswordGenerationToken(data: AdminPasswordGenerationTokenInput!): String!
+  verifyAdminPasswordRessetingToken(data: AdminPasswordResettingTokenInput!): String!
+  turnOnGoogleTwoFactorAuthentication(data: AdminGoogleTwoFactorsCode!): String!
+  authenticateAdminGoogleTwoFactors(data: AdminGoogleTwoFactorsCode!): Auth!
+  turnOnEmailOtpTwoFactorAuthentication: String!
+  authenticateAdminEmailOtpTwoFactors(data: AdminEmailOtpTwoFactorsCode!): Auth!
+  refreshToken(token: String!): Token!
+  createAdministratorBySuperAdmin(data: CreateAdministratorBySuperAdminInput!): User!
+  grantAdministratorCentralRole(data: GrantAdministratorCentralRoleInput!): User!
+  disGrantAdministratorCentralRole(data: GrantAdministratorCentralRoleInput!): User!
+  toggleAdministratorActivationStatus(data: EnableOrDisableAdministratorInput!): User!
+  updateAdministratorBySuperAdmin(data: UpdateAdministratorBySuperAdminInput!): User!
+  reActivateAdministrator(data: ReActivateAdministratorInput!): User!
+  reSendAdministratorTwoFactorCode(data: ReSendAdministratorTwoFactorCodeInput!): String!
+  deleteAdministrator(data: DeleteAdministratorInput!): String!
+  createUserByAdministrator(data: CreateUserByAdministratorInput!): User!
+  updateUserByAdministrator(data: UpdateUserByAdministratorInput!): User!
+  resetUserPasswordRequestByAdministrator(data: ResetUserPasswordRequestByAdministrator!): String!
+  toggleAdminActivationStatus(data: EnableOrDisableAdminInput!): User!
+  softDeleteAdmin(data: SoftDeleteAdminInput!): String!
+  deleteAdmin(data: DeleteAdminInput!): String!
+  restoreAdmin(data: RestoreAdminInput!): User!
+  updateUser(data: UpdateUserInput!): User!
+  changePassword(data: ChangePasswordInput!): User!
+  updateAdministrator(data: UpdateAdministratorInput!): User!
+  updateSuperAdmin(data: UpdateSuperAdminInput!): User!
+  deleteMediaFile(id: String!): MediaFile!
+  createPlan(data: CreatePlanInput!): Plan!
+  updatePlan(data: UpdatePlanInput!): Plan!
+  deletePlan(id: String!): Plan!
+  createCurrency(data: CreateCurrencyInput!): Currency!
+  updateCurrency(data: UpdateCurrencyInput!): Currency!
+  deleteCurrency(id: String!): Currency!
+  createPaymentMethod(data: CreatePaymentMethodInput!): PaymentMethod!
+  updatePaymentMethod(data: UpdatePaymentMethodInput!): PaymentMethod!
+  deletePaymentMethod(id: String!): PaymentMethod!
+  createPayoutMethod(data: CreatePayoutMethodInput!): PayoutMethod!
+  updatePayoutMethod(data: UpdatePayoutMethodInput!): PayoutMethod!
+  deletePayoutMethod(id: String!): PayoutMethod!
+  createCountry(data: CreateCountryInput!): Country!
+  updateCountry(data: UpdateCountryInput!): Country!
+  deleteCountry(id: String!): Country!
+  createBusinessType(data: CreateBusinessTypeInput!): BusinessType!
+  updateBusinessType(data: UpdateBusinessTypeInput!): BusinessType!
+  deleteBusinessType(id: String!): BusinessType!
+  createSpeciality(data: CreateSpecialityInput!): Speciality!
+  updateSpeciality(data: UpdateSpecialityInput!): Speciality!
+  deleteSpeciality(id: String!): Speciality!
+  updateTicket(data: UpdateTicketInput!): Ticket!
+  createTicketMessage(data: CreateTicketMessageInput!): TicketMessage!
+  createTicketCategory(data: CreateTicketCategoryInput!): TicketCategory!
+  updateTicketCategory(data: UpdateTicketCategoryInput!): TicketCategory!
+  deleteTicketCategory(id: String!): TicketCategory!
+  createUserDocumentType(data: CreateUserDocumentTypeInput!): UserDocumentType!
+  updateUserDocumentType(data: UpdateUserDocumentTypeInput!): UserDocumentType!
+  deleteUserDocumentType(id: String!): UserDocumentType!
+  createUserDocument(data: CreateUserDocumentInput!): UserDocument!
+  updateUserDocument(data: UpdateUserDocumentInput!): UserDocument!
+  deleteUserDocument(id: String!): UserDocument!
+  createIp(data: CreateIpInput!): Ip!
+  updateIp(data: UpdateIpInput!): Ip!
+  deleteIp(id: String!): Ip!
+  createCentralRole(data: CreateCentralRoleInput!): CentralRole!
+  updateCentralRole(data: UpdateCentralRoleInput!): CentralRole!
+  deleteCentralRole(id: String!): CentralRole!
+}
+
+input SignupInput {
+  email: String!
+  pass: String!
+  confirmPass: String!
+  username: String!
+  agree: Boolean!
+  locale: Locale!
+}
+
+input LoginInput {
+  email: String!
+  pass: String!
+  remember: Boolean!
+}
+
+input AdministratorTwoFactorsInput {
+  email: String!
+  code: String!
+}
+
+input AdminPasswordGenerationTokenInput {
+  email: String!
+  token: String!
+  pass: String!
+  confirmPass: String!
+}
+
+input AdminPasswordResettingTokenInput {
+  email: String!
+  token: String!
+  pass: String!
+  confirmPass: String!
+}
+
+input AdminGoogleTwoFactorsCode {
+  twoFactorsGoogleAuthenticationCode: String!
+}
+
+input AdminEmailOtpTwoFactorsCode {
+  twoFactorsEmailOtpAuthenticationCode: String!
+}
+
+input CreateAdministratorBySuperAdminInput {
+  username: String!
+  email: String!
+  pass: String!
+  confirmPass: String!
+  locale: Locale!
+  gender: Gender
+  timezone: String
+  fullName: String
+  phone: String
+  city: String
+  administrator_postalCode: String
+  administrator_address: String
+  administrator_website: String
+  administrator_facebookAccount: String
+  administrator_twitterAccount: String
+  administrator_linkedinAccount: String
+  countryId: String
+
+  """mohammad albacha"""
+  administrator_centralRoleId: [String!]
+}
+
+input GrantAdministratorCentralRoleInput {
+  userId: String!
+  administrator_centralRoleId: [String!]!
+}
+
+input EnableOrDisableAdministratorInput {
+  enableOrDisableNote: String
+  userId: String!
+}
+
+input UpdateAdministratorBySuperAdminInput {
+  username: String
+  email: String
+  locale: Locale
+  gender: Gender
+  timezone: String
+  imageId: String
+  fullName: String
+  phone: String
+  city: String
+  countryId: String
+  administrator_centralNote: String
+  administrator_postalCode: String
+  administrator_address: String
+  administrator_website: String
+  administrator_facebookAccount: String
+  administrator_twitterAccount: String
+  administrator_linkedinAccount: String
+  id: String!
+  pass: String
+  confirmPass: String
+}
+
+input ReActivateAdministratorInput {
+  username: String
+  email: String
+  locale: Locale
+  gender: Gender
+  timezone: String
+  imageId: String
+  fullName: String
+  phone: String
+  city: String
+  countryId: String
+  administrator_centralNote: String
+  administrator_postalCode: String
+  administrator_address: String
+  administrator_website: String
+  administrator_facebookAccount: String
+  administrator_twitterAccount: String
+  administrator_linkedinAccount: String
+  id: String!
+}
+
+input ReSendAdministratorTwoFactorCodeInput {
+  email: String!
+}
+
+input DeleteAdministratorInput {
+  id: String!
+}
+
+input CreateUserByAdministratorInput {
+  username: String!
+  email: String!
+  locale: Locale!
+  gender: Gender
+  fullName: String!
+  phone: String!
+  city: String
+  imageId: String
+  admin_isCompanyAccount: Boolean!
+  admin_company: CompanyInput
+  admin_socialSecurityNumber: String
+  admin_dateOfBirth: Date
+  admin_postalCode: Int
+  admin_address: String
+  admin_region: String!
+  admin_street: String!
+  admin_website: String
+  admin_facebookAccount: String
+  admin_twitterAccount: String
+  admin_linkedinAccount: String
+  admin_buildingNumber: Int
+  admin_isSubscribedToNews: Boolean
+  admin_notesByCentral: String
+  countryId: String
+}
+
+input CompanyInput {
+  legalName: String!
+  businessType: String!
+  dateOfEstablishment: Date!
+  phone: String!
+  city: String
+  region: String!
+  street: String!
+  buildingNumber: Int
+  officeNumber: Int
+  postalCode: Int
+  countryId: String
+}
+
+input UpdateUserByAdministratorInput {
+  username: String
+  email: String
+  locale: Locale
+  gender: Gender
+  timezone: String
+  imageId: String
+  fullName: String
+  phone: String
+  city: String
+  countryId: String
+  id: String!
+  admin_isCompanyAccount: Boolean
+  admin_company: CompanyInput
+  admin_socialSecurityNumber: String
+  admin_dateOfBirth: Date
+  admin_postalCode: Int
+  admin_address: String
+  admin_region: String
+  admin_street: String
+  admin_website: String
+  admin_facebookAccount: String
+  admin_twitterAccount: String
+  admin_linkedinAccount: String
+  admin_buildingNumber: Int
+  admin_isSubscribedToNews: Boolean
+  admin_notesByCentral: String
+  admin_isGoogleTwoFactorAuthenticationEnabled: Boolean
+  admin_isEmailOtpTwoFactorAuthenticationEnabled: Boolean
+  sendNotificationEmail: Boolean
+}
+
+input ResetUserPasswordRequestByAdministrator {
+  userId: String!
+}
+
+input EnableOrDisableAdminInput {
+  enableOrDisableNote: String!
+  sendEmail: Boolean!
+  userId: String!
+}
+
+input SoftDeleteAdminInput {
+  id: String!
+  deleteNote: String
+}
+
+input DeleteAdminInput {
+  id: String!
+}
+
+input RestoreAdminInput {
+  id: String!
+}
+
+input UpdateUserInput {
+  username: String
+  email: String
+  locale: Locale
+  gender: Gender
+  timezone: String
+  imageId: String
+  fullName: String
+  phone: String
+  city: String
+  countryId: String
+}
+
+input ChangePasswordInput {
+  oldPassword: String!
+  newPassword: String!
+}
+
+input UpdateAdministratorInput {
+  username: String
+  email: String
+  locale: Locale
+  gender: Gender
+  timezone: String
+  imageId: String
+  fullName: String
+  phone: String
+  city: String
+  countryId: String
+  administrator_centralNote: String
+  administrator_postalCode: String
+  administrator_address: String
+  administrator_website: String
+  administrator_facebookAccount: String
+  administrator_twitterAccount: String
+  administrator_linkedinAccount: String
+}
+
+input UpdateSuperAdminInput {
+  username: String
+  email: String
+  locale: Locale
+  gender: Gender
+  timezone: String
+  imageId: String
+  fullName: String
+  phone: String
+  city: String
+  countryId: String
+}
+
+input CreatePlanInput {
+  isActive: Boolean = true
+  locales: [PlanLocaleInput!]
+  transactionPercentFees: Float!
+  transactionFixedFees: Float!
+}
+
+input PlanLocaleInput {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+input UpdatePlanInput {
+  isActive: Boolean = true
+  locales: [PlanLocaleInput!]
+  transactionPercentFees: Float!
+  transactionFixedFees: Float!
+  id: String!
+}
+
+input CreateCurrencyInput {
+  isActive: Boolean = true
+  locales: [CurrencyLocaleInput!]
+  code: String!
+}
+
+input CurrencyLocaleInput {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+input UpdateCurrencyInput {
+  isActive: Boolean = true
+  locales: [CurrencyLocaleInput!]
+  code: String!
+  id: String!
+}
+
+input CreatePaymentMethodInput {
+  isActive: Boolean = true
+  locales: [PaymentMethodLocaleInput!]
+  transactionPercentFees: Float!
+  transactionFixedFees: Float!
+  apiId: String
+  type: PaymentMethodType!
+  currencies_id: [String!]!
+}
+
+input PaymentMethodLocaleInput {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+input UpdatePaymentMethodInput {
+  isActive: Boolean = true
+  locales: [PaymentMethodLocaleInput!]
+  transactionPercentFees: Float!
+  transactionFixedFees: Float!
+  apiId: String
+  type: PaymentMethodType!
+  currencies_id: [String!]!
+  id: String!
+}
+
+input CreatePayoutMethodInput {
+  isActive: Boolean = true
+  locales: [PayoutMethodLocaleInput!]
+  minPayout: Float!
+  maxPayout: Float!
+  apiId: String
+  type: PayoutMethodType!
+  currencies_id: [String!]!
+}
+
+input PayoutMethodLocaleInput {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+input UpdatePayoutMethodInput {
+  isActive: Boolean = true
+  locales: [PayoutMethodLocaleInput!]
+  minPayout: Float!
+  maxPayout: Float!
+  apiId: String
+  type: PayoutMethodType!
+  currencies_id: [String!]!
+  id: String!
+}
+
+input CreateCountryInput {
+  isActive: Boolean = true
+  locales: [CountryLocaleInput!]
+  invitationPrize: Float!
+  plan_id: String!
+  currency_id: String!
+  shopCurrencies_id: [String!]!
+  paymentMethods_id: [String!]!
+  payoutMethods_id: [String!]!
+  code: String!
+}
+
+input CountryLocaleInput {
+  locale: String!
+  name: String
+}
+
+input UpdateCountryInput {
+  isActive: Boolean = true
+  locales: [CountryLocaleInput!]
+  invitationPrize: Float!
+  plan_id: String!
+  currency_id: String!
+  shopCurrencies_id: [String!]!
+  paymentMethods_id: [String!]!
+  payoutMethods_id: [String!]!
+  code: String!
+  id: String!
+}
+
+input CreateBusinessTypeInput {
+  isActive: Boolean = true
+  locales: [BusinessTypeLocaleInput!]
+  countries_id: [String!]
+  allCountries: Boolean!
+}
+
+input BusinessTypeLocaleInput {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+input UpdateBusinessTypeInput {
+  isActive: Boolean = true
+  locales: [BusinessTypeLocaleInput!]
+  countries_id: [String!]
+  allCountries: Boolean!
+  id: String!
+}
+
+input CreateSpecialityInput {
+  isActive: Boolean = true
+  locales: [SpecialityLocaleInput!]
+  countries_id: [String!]
+  allCountries: Boolean!
+}
+
+input SpecialityLocaleInput {
+  locale: String!
+  name: String!
+  desc: String
+}
+
+input UpdateSpecialityInput {
+  isActive: Boolean = true
+  locales: [SpecialityLocaleInput!]
+  countries_id: [String!]
+  allCountries: Boolean!
+  id: String!
+}
+
+input UpdateTicketInput {
+  id: String!
+  status: TicketStatus
+  central_notes: String
+}
+
+input CreateTicketMessageInput {
+  ticket_id: String!
+  message: String!
+}
+
+input CreateTicketCategoryInput {
+  isActive: Boolean = true
+  locales: [TicketCategoryLocaleInput!]
+}
+
+input TicketCategoryLocaleInput {
+  locale: String!
+  name: String
+}
+
+input UpdateTicketCategoryInput {
+  isActive: Boolean = true
+  locales: [TicketCategoryLocaleInput!]
+  id: String!
+}
+
+input CreateUserDocumentTypeInput {
+  isActive: Boolean = true
+  locales: [UserDocumentTypeLocaleInput!]
+  countryId: String
+  nameEN: String!
+  nameAR: String!
+  descriptionAR: String!
+  descriptionEN: String!
+  centralNote: String
+}
+
+input UserDocumentTypeLocaleInput {
+  locale: String!
+}
+
+input UpdateUserDocumentTypeInput {
+  isActive: Boolean = true
+  locales: [UserDocumentTypeLocaleInput!]
+  countryId: String
+  nameEN: String!
+  nameAR: String!
+  descriptionAR: String!
+  descriptionEN: String!
+  centralNote: String
+  id: String!
+}
+
+input CreateUserDocumentInput {
+  user_id: String!
+  type_id: String!
+  shop_id: String
+  central_notes: String
+}
+
+input UpdateUserDocumentInput {
+  user_id: String
+  type_id: String
+  shop_id: String
+  central_notes: String
+  id: String!
+  status: DocumentStatus!
+}
+
+input CreateIpInput {
+  ip: String!
+}
+
+input UpdateIpInput {
+  ip: String!
+  id: String!
+}
+
+input CreateCentralRoleInput {
+  permisions: [PermisionsInput!]!
+  name: String!
+  description: String!
+}
+
+input PermisionsInput {
+  action: String!
+  subject: String!
+  fields: [String!]
+  conditions: JSON
+}
+
+input UpdateCentralRoleInput {
+  permisions: [PermisionsInput!]!
+  name: String!
+  description: String!
+  id: String!
+}
+
+type Subscription {
+  mediaFileCreated: MediaFile!
+  logCreated: Log!
+  planCreated: Plan!
+  currencyCreated: Currency!
+  paymentMethodCreated: PaymentMethod!
+  payoutMethodCreated: PayoutMethod!
+  countryCreated: Country!
+  businessTypeCreated: BusinessType!
+  specialityCreated: Speciality!
+  ticketCreated: Ticket!
+  ticketMessageCreated: TicketMessage!
+  ticketCategoryCreated: TicketCategory!
+  userDocumentTypeCreated: UserDocumentType!
+  userDocumentCreated: UserDocument!
+  ipCreated: Ip!
+  centralRoleCreated: CentralRole!
+}

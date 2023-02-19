@@ -1,0 +1,28 @@
+{{> header.en}}
+
+<p>a new Sadeed account has been updated by Sadeed accounts administrator</p>
+<h2>details: </h2>
+
+
+   {{#each updatedData}}
+    <div>
+      <ul>
+        <li>
+            property : {{this.property}}
+        </li>
+        
+        <li>
+            oldValue : {{this.oldValue}}
+        </li>
+        <li>
+            newValue : {{this.newValue}}
+        </li>
+      </ul>  
+      ---
+    </div>
+    {{/each}}<p>you can access your account by clicking on this link</p>
+<a href={{link}}>login to my account</a>
+<p>or copy this link and paste it in your browser:</p>
+<p>{{link}}</p>
+
+{{> footer.en}}

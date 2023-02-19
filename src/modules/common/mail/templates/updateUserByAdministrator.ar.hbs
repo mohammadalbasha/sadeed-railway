@@ -1,0 +1,28 @@
+{{> header.ar}}
+
+<p> تم تعديل بعض معلومات حسابك من قبل مسؤول الحسابات في منصة سديد</p>
+<h2>التفاصيل:</h2>
+
+   {{#each updatedData}}
+    <div>
+      <ul>
+        <li>
+            property : {{this.property}}
+        </li>
+        
+        <li>
+            oldValue : {{this.oldValue}}
+        </li>
+        <li>
+            newValue : {{this.newValue}}
+        </li>
+      </ul>  
+      ---
+    </div>
+    {{/each}}
+<p>بإمكانك الوصول إلى حسابك بالضغط على</p>
+<a href={{link}}>تسجيل الدخول إلى حسابي</a>
+<p>أو نسخ الرابط التالي ولصقه في المتصفح:</p>
+<p>{{link}}</p>
+
+{{> footer.ar}}

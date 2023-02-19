@@ -1,0 +1,731 @@
+# Write your query or mutation here
+  mutation loginSuperAdministrator{
+  login(data:{email:"hamoudy00128@h.com",pass:"1234abcd",remember:true}){
+    
+    ability
+    accessToken
+  }
+}
+
+
+ 
+mutation loginADMINISTRATORUser{
+  login(data:{email:"h@hotmail.com",pass:"1234abcd",remember:true}){
+    accessToken
+    ability
+  }
+}
+
+mutation loginMyEmailUserAdministrator{
+  login(data:{email:"hamoudy00128@hotmail.com",pass:"1234abcd",remember:true}){
+    accessToken
+    ability
+  }
+}
+
+mutation resendAdministratorTwoFactorsCode {
+  reSendAdministratorTwoFactorCode(data: {
+    email:"hamoudy00128@hotmail.com"
+  })
+}
+
+mutation verifyAdministratorTwoFactorsCode{
+  verifyAdministratorTwoFactorsCode(data:{email: "hamoudy00128@hotmail.com", code: "65a2bde3ba8d656308962ca8aa20cff7"})
+}
+
+
+
+mutation creteIp{
+  createIp(data:{
+    ip:"172.29.224.1"
+  }){
+    ip
+  }
+}
+
+mutation deleteIp{
+  deleteIp(id: "63e399e270ed2e392343ef53"){
+    id
+  }
+}
+
+query IPs{
+  ips{
+    items{
+      ip
+      id
+    }
+  }
+}
+
+mutation reActivateAdministrator{
+  reActivateAdministrator(data:{
+    id: "63d5305f2aa21eb66da08fde"
+  }){
+    id
+  }
+  
+}
+
+query fetchUsers{
+  users(filterBy:{}){
+    items{
+      isActive
+      administrator_centralRoleId
+      imageId
+    }
+    totalCount
+  }
+}
+
+query fetchAdministratorUser{
+  administratorUsers(filterBy:{}){
+    items{
+      administrator_centralRoleId
+      administrator_centralRole{
+        permisions{
+          subject
+          action
+        }
+      }
+      id
+      email
+      username
+      fullName
+      deleted
+    }
+    totalCount
+  }
+}
+
+
+query maxCentralPermisions{
+  maxCentralPermisions{
+    action
+    subject
+    fields
+    conditions
+  }
+}
+
+
+# central role can be object like this , but we have no such that max permision
+# mutation createCentralRole{
+#   createCentralRole(data:{
+#     name: "read Logs",
+#     description:"allow administrator to readl add_role logs",
+#     permisions: [{
+#           subject: "Log",
+#           action: "read",
+#           fields:  ["type", "endpoint", "user_id", "createdAt"] ,
+#           conditions: {
+#             user_id: {
+#               type : "id"
+#             },
+#             endpoint: {
+#               type: "multi",
+#               value: ["central"]
+    
+#             },
+#             type: {
+#               type: "multi",
+#               value: ["query", "mutation"]
+#             }
+            
+#           }
+#         }
+
+#     ]
+#   }){
+#     id
+#     name
+#     permisions{
+#       action
+#     	fields
+#       conditions
+     
+#     }
+    
+#   }
+# }
+
+mutation createCentralRole{
+  createCentralRole(data:{
+    name: "User Administrator",
+    description:"User Administrator",
+    permisions: [{
+          subject: "User",
+          action: "manage",
+      		fields: [],
+      		conditions: {}
+          
+        }
+
+    ]
+  }){
+    id
+    name
+    permisions{
+      action
+    	fields
+      conditions
+     
+    }
+    
+  }
+}
+
+
+
+
+mutation createCentralRoleMEDIAFILE{
+  createCentralRole(data:{
+    name: "media files managment",
+    description:"media files managment",
+    permisions: [{
+          subject: "MediaFile",
+          action: "manage",
+      		fields: [],
+      		conditions: {
+            user_id: {
+              type: "id"
+            }
+          }
+          
+        }
+
+    ]
+  }){
+    id
+    name
+    permisions{
+      action
+    	fields
+      conditions
+     
+    }
+    
+  }
+}
+
+
+
+
+
+query fetchCentralRoles{
+  centralRoles{
+    items{
+      id
+      name
+  	permisions{
+      subject
+      action
+      fields
+      conditions
+    }
+    }
+    totalCount
+  
+  }
+}
+
+mutation deleteCentralRole{
+  deleteCentralRole(id:"63e39c2357bd23e0b97f480b"){
+    id
+  }
+}
+
+mutation createAdministratorBySuperAdmin{
+createAdministratorBySuperAdmin(data:{
+  username: "moha2mmad",
+	fullName:"mohammad2 albacha",
+  email: "hamoudy00122238@hotmail.com",
+  pass:"1234abcd",
+  confirmPass: "1234abcd",
+  phone: "099782724384",
+  locale: en,
+  
+}) {
+	username
+  email
+  id
+  
+}
+}
+
+  
+
+mutation grantCenralRoleToAdministrator{
+  grantAdministratorCentralRole(data:{
+    userId: "63d5305f2aa21eb66da08fde",
+    administrator_centralRoleId: "63e3b481b74060aab77d33e4"
+  }){
+    email
+    administrator_centralRoleId
+    administrator_centralRole{
+      permisions{
+        action
+        subject
+        fields
+      }
+    }
+  }
+}
+
+
+
+
+mutation disgrantAdministratorCentralRole{
+  disGrantAdministratorCentralRole(data:{
+    userId: "63d5305f2aa21eb66da08fde",
+    administrator_centralRoleId: "63e3a0652da301ecabca6a6b"
+  }){
+    administrator_centralRoleId
+  }
+}
+
+
+
+query fetchLogs{
+ logs(filterBy:{
+  endpoint: central,
+  hasErrors: false,
+  dateFilter : {
+    gte: "2023-01-30",
+    lte: "2023-02-30",
+  } 
+}
+  
+)
+
+  {
+  totalCount
+  items{
+    type
+    id
+    endpoint
+    createdAt
+    operationName
+    hasErrors
+    response
+    ip
+    user{
+      email
+    }
+   
+     
+  }
+} 
+}
+
+
+
+
+
+
+mutation changePassword{
+  changePassword(data:{
+    oldPassword:"12345abcde6",
+    newPassword:"1234abcd"
+  }){
+    username
+  }
+}
+
+mutation updateAdministrator{
+ updateAdministrator(data:{
+  administrator_website:"www.facebook.com",
+  imageId: "63e3b55fb74060aab77d3415"
+  
+})
+  {
+    administrator_website
+    imageId
+  }
+}
+
+mutation addImageToUser{
+  updateAdministrator(data:{
+    imageId: "63e3b236b74060aab77d33d4" #this id returend by restApi endpoint
+  }){
+    imageId
+  }
+}
+
+
+
+mutation updateSuperAdmin{
+  updateSuperAdmin(data:{
+    fullName:"Super Mohammad Albacha"
+  }){
+    fullName
+  }
+}
+
+
+
+mutation updateAdministratorBySuperAdmin{
+  updateAdministratorBySuperAdmin(data:{
+    id: "63d5305f2aa21eb66da08fde",
+    locale: ar
+    administrator_centralNote:"this is an administrator",
+    imageId:"63e3b236b74060aab77d33d4"
+ 
+  }){
+    locale
+  }
+}
+
+
+mutation toggleAdministratorActivationStatus{
+  toggleAdministratorActivationStatus(data:{
+    userId: "63d5305f2aa21eb66da08fde",
+    enableOrDisableNote: "some note ",
+  }){
+enableOrDisableNote 
+    updatedAt
+    administrator_updatedById
+    email
+    administrator_updatedBy{
+      username    }
+    isActive
+    locale
+  }
+}
+
+
+ mutation deleteAdministrator{
+  deleteAdministrator(data:{id: "63de72604a9c984175c155ab"})
+}
+
+mutation createUserByAdministrator {
+  createUserByAdministrator(data:{
+    username:"mohammad user12",
+    email: "moha3mmadalbacha22d000@gmail.com",
+    locale: ar,
+    admin_isCompanyAccount: true,
+    admin_company:{
+      dateOfEstablishment:"12-12-2002",
+      legalName: "yyugd3mmds",
+      businessType: "software",
+      phone: "099769w32327",
+      region: "yabroud",
+      street: "40",
+      buildingNumber: 201,
+      officeNumber: 401,
+      postalCode: 963
+    },
+    fullName:"mohammad 32albacha",
+    admin_socialSecurityNumber: "334133",
+    admin_dateOfBirth: "12-12-2000",
+    admin_street:"40",
+    admin_region:"yabroud",
+    admin_buildingNumber: 201,
+    admin_isSubscribedToNews: true,
+    phone: "03248032432",
+    admin_postalCode: 963
+    
+    
+  }){
+    username
+    id
+  }
+}
+
+
+mutation verifyUserAccountByAdministrator{
+  verifyAdminPasswordGenerationToken(data:{
+  	token: "198b4995fc28cac21c9284a66eb03573",
+    email: "mohammadalbacha2000@gmail.com",
+    pass: "1234abcd",
+    confirmPass: "1234abcd"
+  })
+}
+mutation loginNewcentraldUser{
+  login(data:{email:"mohammadalbacha2000@gmail.com", pass:"1234abcd", remember: true}){
+    accessToken
+    ability
+  }
+}
+
+query generateGoogleTwoFactorsCode{
+  generateAdminGoogleTwoFactorsCode
+}
+
+mutation enableGoogleTwoFactorsCode{
+  turnOnGoogleTwoFactorAuthentication(data:{
+    twoFactorsGoogleAuthenticationCode: "270336"
+  })
+}
+
+mutation authenticateAdminGoogleTwoFactors{
+  authenticateAdminGoogleTwoFactors(data:{
+    twoFactorsGoogleAuthenticationCode: "358172"
+  }){
+    accessToken
+    ability
+  }
+}
+
+
+
+mutation enableEmailOtpTwoFactorAuthentication{
+  turnOnEmailOtpTwoFactorAuthentication
+    
+  
+}
+
+mutation authenticateAdminEmailOtpTwoFactors{
+  authenticateAdminEmailOtpTwoFactors(data:{
+    twoFactorsEmailOtpAuthenticationCode:"629d8affc2b10c8c20f2aeb18f5f8c2b"
+  }){
+    accessToken
+  }
+}
+
+query fetchAdminSellerCustomerUsersWithFilterByAdministrator{
+  adminUsers(filterBy:{
+    admin_company:{
+      legalName:"company1"
+    },
+    fullName:"moh",
+    admin_dateOfBirth: "12-12-2000"
+  }){
+    items{
+      fullName
+      admin_dateOfBirth
+      admin_company{
+        legalName
+        phone
+      }
+    }
+    
+  }
+}
+
+
+query fetchAdminSellerCustomerUsersByAdministrator{
+  adminUsers(filterBy:{}){
+    items{
+      fullName
+      admin_dateOfBirth
+      id
+      email
+      admin_socialSecurityNumber
+    }
+    
+  }
+}
+
+
+query fetchSoftDeletedAdminSellerCustomerUsersByAdministrator{
+  adminUsers(filterBy:{
+    admin_isSoftDeleted: true
+  }){
+    items{
+      fullName
+      admin_dateOfBirth
+      id
+      email
+      admin_socialSecurityNumber
+ 			admin_isSoftDeleted
+      deleted
+    }
+    
+  }
+}
+
+query fetchArchivedAdminSellerCustomerUsersByAdministrator{
+  adminUsers(filterBy:{
+    deleted: true
+  }){
+    items{
+      fullName
+      admin_dateOfBirth
+      id
+      email
+      admin_socialSecurityNumber
+ 			admin_isSoftDeleted
+      deleted
+    }
+    
+  }
+}
+
+
+mutation updateAdminSellerCustomerUserByAdministrator{
+	updateUserByAdministrator(data:{
+    admin_socialSecurityNumber: "333413ee333e3u83333312",
+    id: "63dc29e410babb14a81c482f",
+    sendNotificationEmail: true,
+    locale: ar,
+    admin_region: "yabrud"
+  }){
+    admin_socialSecurityNumber
+  }  
+}
+
+mutation resetUserPasswordRequestByAdministrator{
+  resetUserPasswordRequestByAdministrator(data:{
+    userId: "63dc29e410babb14a81c482f"
+  })
+}
+
+mutation verifyPasswordRessetingToken{
+  verifyAdminPasswordRessetingToken(data:{
+    email:"mohammadalbacha2000@gmail.com",
+    token:"07e798afc34031987d73d379a17452be",
+    pass: "1234abcd",
+    confirmPass: "1234abcd"
+  })
+}
+
+mutation softDeleteCustomerSellerUserByAdministrator{
+  softDeleteAdmin(data:{
+    id:"63dc29e410babb14a81c482f",
+    deleteNote: "some notw"
+  })
+}
+
+mutation deleteCustomerSellerUserByAdministrator{
+  deleteAdmin(data:{
+    id:"63dc29e410babb14a81c482f"
+  })
+}
+
+mutation restoreCustomerSellerUserByAdministrator{
+  restoreAdmin(data:{id:"63dc29e410babb14a81c482f"}){
+    deleted
+    admin_isSoftDeleted
+  }
+}
+
+query me{
+  me{
+    user{id
+    email
+      admin_isGoogleTwoFactorAuthenticationEnabled
+      admin_isEmailOtpTwoFactorAuthenticationEnabled
+      admin_isGoogleTwoFactorAuthenticated
+    }
+  }
+}
+
+
+# check this 
+# mutation{
+#   updateCentralRole(data:{
+#     id: "63c78ce675aa1a4133e649f4",
+#     permisions:[{
+#       subject: "User",
+#       action: "central"
+#     }],
+#     name:"centralRole2",
+#     description: "centralRole2"
+#   }){
+#     name
+#     permisions{
+#       action
+#     }
+#   }
+# }
+
+
+# {logs(filterBy:{endpoint: central},limit:10){
+#   items{
+#     user{
+#       email
+#     }
+#   }
+# }
+
+# }
+
+
+
+# {
+#   centralLogs{
+#     operationName
+#     type
+  
+#   }
+# }
+
+
+# query logs{
+#   paginatedCentralLogs(limit:20, skip:20){
+#     items{
+#       operationName
+#       type
+#       user_id{
+#         email
+#       }
+#     }
+#     totalCount
+#   }
+# }
+
+# {
+#   paginatedFrontAndAdminLogs(skip:0, limit: 5){
+#     items{
+#       operationName
+#       type
+#     }
+#     totalCount
+#   }
+# }
+# {
+#   centralLogs{
+#     endpoint
+#   }
+# }
+
+# {
+#   logs{}
+# }
+
+# {
+#   paginatedCentralLogs(skip:0, limit:10){
+#     items{
+#       user{
+#         name
+#         email
+#       }
+#       endpoint
+#       operationName
+#       response
+      
+#     }
+#     totalCount
+#   }
+# }
+
+
+# {
+#   paginatedFrontAndAdminLogs(skip:0, limit:10){
+#     items{
+#       response
+#     }
+#   }
+# }
+
+
+
+
+# {
+#   getlogs{
+#     id
+#     endpoint
+#     response
+#     user_id{email}
+#   }
+# }
+
+# {
+#   me{
+#     user{
+#       id
+#     }
+#   }
+# }
+
